@@ -2,11 +2,11 @@ package database
 
 import (
 	"log"
+	"url-shortener/config"
 )
 
 func SaveUrl(shortUrl, originalUrl, userId string) {
-
-	err := StoreService.redisClient.Set(Ctx, shortUrl, originalUrl, CacheDuration).Err()
+	err := StoreService.redisClient.Set(Ctx, shortUrl, originalUrl, config.CacheDuration).Err()
 
 	if err != nil {
 		log.Fatalf("Failed to save url: %v", err)

@@ -3,9 +3,9 @@ package database
 import (
 	"context"
 	"log"
-	"time"
 
 	"github.com/go-redis/redis/v8"
+	"github.com/spf13/viper"
 )
 
 type StorageService struct {
@@ -17,11 +17,11 @@ var (
 	Ctx          = context.Background()
 )
 
-const CacheDuration = 6 * time.Hour
-
 func InitializeStore() *StorageService {
+	dsn := viper.GetString("DATABASE_URL")
+
 	redisClient := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
+		Addr:     dsn,
 		Password: "",
 		DB:       0,
 	})
