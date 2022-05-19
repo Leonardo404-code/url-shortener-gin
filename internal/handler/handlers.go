@@ -1,11 +1,13 @@
 package handler
 
 import (
+	"fmt"
 	"net/http"
 	"url-shortener/pkg/database"
 	"url-shortener/pkg/shortener"
 
 	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
 )
 
 type Request struct {
@@ -28,7 +30,7 @@ func CreateShortUrl(c *gin.Context) {
 
 	database.SaveUrl(shortUrl, creationRequest.OriginalUrl, creationRequest.UserId)
 
-	host := "http://localhost:3000/"
+	host := fmt.Sprintf("http://localhost:%s/get_short_url?shortUrl=", viper.GetString("PORT"))
 
 	c.JSON(200, gin.H{
 		"short_url": host + shortUrl,
